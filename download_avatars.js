@@ -17,10 +17,10 @@ function getRepoContributors(repoOwner, repoName, cb) {
   var options = {
     url: requestURL,
     headers: {
-        'User-Agent': "GitHub Avatar Downloader - Student Project"
-  }
-};
-  request.get(options,function(err, response, body){
+      'User-Agent': "GitHub Avatar Downloader - Student Project"
+    }
+  };
+  request.get(options, function(err, response, body){
     //returning the body of the response in JSON format
     return cb(JSON.parse(body));
 
@@ -32,20 +32,19 @@ function downloadImageByURL(body) {
   body.forEach(function(item){
     var filePath = "./avatars/" + item.login + ".jpg";
     var url = item.avatar_url;
-    request.get(url)               // Note 1
-       .on('error', function (err) {                                   // Note 2
-         throw err;
-       })
-       .on('response', function (response) {                           // Note 3
-       })
-       .pipe(fs.createWriteStream(filePath));
-       console.log(item.login + "'s photo download completed!");
+    request.get(url)
+    // if error, it will show erro
+      .on('error', function (err) {
+        throw err;
+      })
+      .pipe(fs.createWriteStream(filePath));
+    console.log(item.login + "'s photo download completed!");
   });
 }
 
 if(owner && repo){
-  getRepoContributors(owner, repo,downloadImageByURL);
+  getRepoContributors(owner, repo, downloadImageByURL);
 }else{
-  console.log("command should be in the format of node download_avatars.js <owner> <repo>")
+  console.log("command should be in the format of node download_avatars.js <owner> <repo>");
 }
 
