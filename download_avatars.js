@@ -1,5 +1,7 @@
+require('dotenv').config();
+token = process.env.GITHUBSECRETTOKEN;
 var GITHUB_USER = "hajinasiri";
-var GITHUB_TOKEN = "35e9aae1b4a51c485662c41165537e7cc6077e5e";
+var GITHUB_TOKEN = token;
 
 var request = require('request');
 var fs = require('fs');
@@ -27,8 +29,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
   });
 }
 function downloadImageByURL(body) {
-  // ...
-
+  // getting avatar url from the body, creating file path and downloading the photo into the path.
   body.forEach(function(item){
     var filePath = "./avatars/" + item.login + ".jpg";
     var url = item.avatar_url;
